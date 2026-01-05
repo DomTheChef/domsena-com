@@ -22,7 +22,7 @@ jobs:
 
       - name: Upload site to $web
         run: |
-          az storage blob upload-batch --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" --destination '$web' --source . --overwrite --auth-mode login
+          az storage blob upload-batch --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" --destination '$web' --source site --overwrite --auth-mode login
 
       - name: Force index.html content-type
         run: |
