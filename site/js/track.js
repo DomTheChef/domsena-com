@@ -5,7 +5,7 @@
     return;
   }
 
-  fetch("https://dom-prod-fnapp.azurewebsites.net/api/track", {
+  fetch("https://dom-prod-fnapp-fgf2hsd7gvexf8h0.westeurope-01.azurewebsites.net/api/track", {
     method: "GET",
     mode: "cors"
   })
@@ -15,5 +15,5 @@
     .catch((err) => {
       console.warn("Tracking call failed:", err);
     });
-})();
+});
 
