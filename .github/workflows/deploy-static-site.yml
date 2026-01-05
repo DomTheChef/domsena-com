@@ -11,39 +11,19 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Azure Login (Service Principal)
+      - name: Azure Login (Service Principal via creds JSON)
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Upload /site to $web
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az storage blob upload-batch \
-              --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
-              --destination '$web' \
-              --source site \
-              --overwrite \
-              --auth-mode login
+      - name: Upload site to $web
+        run: |
+          az storage blob upload-batch --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" --destination '$web' --source . --overwrite --auth-mode login
 
       - name: Force index.html content-type
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az storage blob upload \
-              --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
-              --container-name '$web' \
-              --name index.html \
-              --file site/index.html \
-              --content-type 'text/html; charset=utf-8' \
-              --overwrite \
-              --auth-mode login
+        run: |
+          az storage blob upload --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" --container-name '$web' --name index.html --file index.html --content-type "text/html; charset=utf-8" --overwrite --auth-mode login
