@@ -26,4 +26,4 @@ jobs:
 
       - name: Force index.html content-type
         run: |
-          az storage blob upload --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" --container-name '$web' --name index.html --file index.html --content-type "text/html; charset=utf-8" --overwrite --auth-mode login
+          az storage blob upload --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" --container-name '$web' --name index.html --file site/index.html --content-type "text/html; charset=utf-8" --overwrite --auth-mode login
