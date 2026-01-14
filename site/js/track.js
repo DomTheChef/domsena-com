@@ -13,8 +13,10 @@
     mode: "cors",
     cache: "no-store"
   })
-    .then(() => {
+    .then(r => r.json())             
+    .then(data => {
       localStorage.setItem(KEY, String(now));
+      console.log("Total visits:", data.totalVisits); 
     })
     .catch((err) => {
       console.warn("Tracking call failed:", err);
